@@ -1,0 +1,16 @@
+{
+  "name": "chitralai-compyle-ai-image-search-s3-rekognition",
+  "version": "1.0.0",
+  "description": "An intelligent image search application that automatically analyzes uploaded images using AWS Rekognition and allows users to search for images using natural language keywords.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

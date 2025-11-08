@@ -1,0 +1,43 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3ReadAccess",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:GetObjectVersion"
+      ],
+      "Resource": "arn:aws:s3:::my-image-search-bucket-kavishbasole28/*"
+    },
+    {
+      "Sid": "RekognitionDetectLabels",
+      "Effect": "Allow",
+      "Action": [
+        "rekognition:DetectLabels"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "DynamoDBWriteAccess",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+      ],
+      "Resource": "arn:aws:dynamodb:us-east-1:888121514832:table/images-metadata"
+    },
+    {
+      "Sid": "CloudWatchLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:us-east-1:888121514832:log-group:/aws/lambda/*"
+    }
+  ]
+}

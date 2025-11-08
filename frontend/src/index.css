@@ -1,0 +1,521 @@
+/* ---
+  COMPLETE AESTHETIC REVAMP
+  Theme: Modern Dark/Light (Blue Accent)
+  Fonts: Montserrat (Headings), Poppins (Body)
+  Colors: Solid Blue (Light) / Navy Blue (Dark)
+--- */
+
+/* --- 1. Global Styles & Fonts --- */
+:root {
+  /* Fonts */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  
+  /* --- Nav Widths --- */
+  /* Only collapsed width now */
+  --nav-width: 90px; 
+  
+  /* --- Transitions (for soft animation) --- */
+  --transition-short: all 0.2s ease-out;
+  --transition-long: all 0.3s ease-out;
+
+  /* --- LIGHT MODE (Default) --- */
+  --primary-color: #007AFF; /* Vibrant Blue */
+  --primary-color-hover: #0056b3;
+  --primary-shadow: rgba(0, 122, 255, 0.3);
+  
+  --bg-primary: #FFFFFF; /* Main background */
+  --bg-secondary: #F4F6F8; /* Nav/Sidebar background */
+  --bg-tertiary: #EFEFEF; /* Card/Button hover */
+  
+  --text-primary: #111827; /* Near-black */
+  --text-secondary: #6B7280; /* Gray */
+  --text-tertiary: #FFFFFF; /* On primary buttons */
+  
+  --border-color: #E5E7EB;
+  --shadow-color: rgba(0,0,0,0.05);
+}
+
+/* --- DARK MODE (with Navy Blue) --- */
+html.dark {
+  /* --- NEW: Navy Blue Accent --- */
+  --primary-color: #3871E0; /* Vibrant Navy Blue */
+  --primary-color-hover: #5A91E8;
+  --primary-shadow: rgba(56, 113, 224, 0.3);
+
+  --bg-primary: #121212; 
+  --bg-secondary: #181818; 
+  --bg-tertiary: #282828; 
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #b3b3b3; 
+  --text-tertiary: #FFFFFF;
+  
+  --border-color: #282828;
+  --shadow-color: rgba(0,0,0,0.2);
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: var(--transition-long);
+}
+
+/* --- 2. Main 2-Column Layout --- */
+.app-layout {
+  display: grid;
+  /* Set to permanently collapsed nav width */
+  grid-template-columns: var(--nav-width) 1fr;
+  height: 100vh;
+  overflow: hidden;
+  transition: grid-template-columns var(--transition-long);
+}
+
+/* --- 3. Left Navigation Bar (Permanently Collapsed, Icon-Only) --- */
+.left-nav {
+  grid-column: 1;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 24px 0; /* Centering padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center icons horizontally */
+  width: var(--nav-width);
+  transition: width var(--transition-long);
+  overflow: hidden;
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.nav-group-bottom {
+  margin-top: auto;
+}
+
+/* --- NAV ITEM FIX: NO BLUE, CENTERED, SQUARE --- */
+.nav-item, .theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* PERFECTLY CENTER ICONS */
+  gap: 16px; /* Space between icon and text (text removed, but good practice) */
+  padding: 10px; /* Adjust padding to make it a square */
+  border-radius: 8px; /* Square with rounded corners */
+  background: none; 
+  border: none;
+  cursor: pointer;
+  
+  width: 36px; /* Define explicit width to make it square */
+  height: 36px; /* Define explicit height to make it square */
+  
+  color: var(--text-secondary); /* Default icon color */
+  text-decoration: none;
+  transition: var(--transition-short);
+  white-space: nowrap; 
+}
+.nav-item:hover, .theme-toggle:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary); /* Subtle hover */
+}
+.nav-item.active {
+  /* No blue background. Just a slightly darker background and primary text color. */
+  color: var(--text-primary); 
+  background-color: var(--bg-tertiary); /* Keep it subtle for active state */
+  /* Remove box-shadow */
+  /* box-shadow: 0 5px 15px var(--primary-shadow); */
+}
+.nav-item svg, .theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; 
+}
+/* --- END OF NAV FIX --- */
+
+/* --- 4. Collapsed Nav State (Removed as nav is always collapsed) --- */
+
+
+/* --- 5. Main Content Area (Layout Fix) --- */
+.main-content {
+  grid-column: 2;
+  position: relative;
+  overflow-y: auto; /* This is the scrollable part */
+}
+.main-header {
+  /* This is the sticky header */
+  position: sticky;
+  top: 0;
+  padding: 16px 48px; 
+  z-index: 10;
+  
+  /* --- THIS FIXES THE EMPTY SPACE BUG --- */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  /* --- END OF EMPTY SPACE BUG FIX --- */
+}
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-primary);
+  opacity: 0.9;
+  backdrop-filter: blur(8px);
+  z-index: -1;
+  transition: var(--transition-long);
+}
+.main-body {
+  /* This is the scrollable content */
+  padding: 0 48px 48px 48px; 
+}
+.gallery-header {
+  display: flex;
+  justify-content: flex-end; /* Justify button to the right */
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+.header-title {
+  /* "Welcome back!" is now in the header */
+  font-family: var(--font-heading);
+  font-size: 2rem; /* Sized to fit header */
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  transition: var(--transition-long);
+  white-space: nowrap;
+}
+
+/* --- Upload Button (Blue Accent) --- */
+.show-upload-btn {
+  background: var(--primary-color);
+  color: var(--text-tertiary);
+  border: none;
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-short);
+  box-shadow: 0 4px 15px var(--primary-shadow);
+  white-space: nowrap; /* Stop text from wrapping */
+}
+.show-upload-btn:hover {
+  background: var(--primary-color-hover);
+  transform: scale(1.05);
+}
+
+/* --- Search Bar --- */
+.search-container {
+  width: 100%;
+  max-width: 400px; 
+}
+.search-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: var(--bg-tertiary);
+  border-radius: 50px;
+  overflow: hidden; 
+  transition: var(--transition-short);
+}
+.search-form:focus-within {
+  background: var(--bg-tertiary);
+  box-shadow: 0 0 0 2px var(--primary-color); 
+}
+.search-input {
+  flex-grow: 1;
+  padding: 12px 0 12px 16px; 
+  font-size: 1rem;
+  font-family: var(--font-body);
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+}
+.search-input:focus {
+  outline: none;
+}
+.search-btn, .clear-btn {
+  padding: 0 12px;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-short);
+}
+.search-btn:hover, .clear-btn:hover {
+  color: var(--text-primary);
+}
+.search-error {
+  color: var(--error-red);
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+/* --- 6. Masonry Gallery Grid --- */
+.gallery-message {
+  text-align: center;
+  color: var(--light-text);
+  padding: 50px 0;
+}
+.gallery-message h2 {
+  font-family: var(--font-heading);
+}
+
+.image-gallery-grid {
+  column-count: 4; 
+  column-gap: 24px;
+}
+
+.image-card {
+  break-inside: avoid;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  width: 100%;
+  position: relative;
+  transition: var(--transition-short);
+  animation: fadeIn 0.5s ease-out;
+}
+.image-card:hover {
+  background: var(--bg-tertiary);
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transform: translateY(-4px); 
+}
+
+.image-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- 7. Tag Hover Effect --- */
+.image-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+  opacity: 0;
+  transition: var(--transition-long);
+}
+.image-card-keywords {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
+}
+.image-card:hover .image-card-overlay,
+.image-card:hover .image-card-keywords {
+  opacity: 1;
+}
+
+/* --- Aesthetic Tag Style --- */
+.keyword-tag {
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8em;
+  padding: 4px 10px; 
+  border-radius: 50px; 
+  transition: var(--transition-short);
+}
+.image-card:hover .keyword-tag {
+  background-color: var(--primary-color);
+  color: var(--text-tertiary);
+}
+
+/* --- 8. Upload Modal (Blue Accent) --- */
+.upload-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.upload-modal-content {
+  background: var(--bg-primary);
+  padding: 30px;
+  border-radius: 12px;
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  transition: var(--transition-long);
+}
+.close-modal-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--bg-tertiary);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition-short);
+}
+.close-modal-btn:hover {
+  background: var(--border-color);
+  transform: rotate(90deg);
+}
+.upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+  transition: var(--transition-short);
+}
+.upload-zone.dragging {
+  border-color: var(--primary-color);
+  background-color: var(--bg-primary);
+}
+.upload-icon { font-size: 40px; color: var(--primary-color); }
+.select-btn {
+  background: var(--primary-color);
+  color: var(--text-tertiary);
+  border: none;
+  padding: 12px 22px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: var(--font-heading);
+  margin: 10px 0;
+  transition: var(--transition-short);
+}
+.select-btn:hover {
+  background: var(--primary-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--primary-shadow);
+}
+.file-hint { color: var(--light-text); font-size: 0.9em; }
+.progress-fill {
+  height: 100%;
+  background: var(--primary-color); 
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+/* --- 9. Error/Message Styles --- */
+.error-message {
+  color: var(--error-red);
+  background: var(--error-bg);
+  border: 1px solid var(--error-red);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+.retry-btn {
+  background: var(--error-red);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* --- 10. Auth Page Styles (For Later) --- */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+}
+.auth-form {
+  background: var(--bg-primary);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  width: 100%;
+  max-width: 400px;
+}
+.auth-form h2 {
+  text-align: center;
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-shadow);
+}
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  font-family: var(--font-heading);
+  cursor: pointer;
+  transition: var(--transition-short);
+}
+.auth-btn:hover {
+  background: var(--primary-color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px var(--primary-shadow);
+}
+.auth-switch {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-secondary);
+}
+.auth-switch a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
